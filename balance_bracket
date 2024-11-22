@@ -1,0 +1,29 @@
+
+bool isBalanced(string s) {
+  // Write your code here
+  stack<char>check;
+  for(int i=0;i<s.length();i++)
+  {
+    if(s[i]=='(' || s[i]=='{' || s[i]=='[')
+    {
+      check.push(s[i]);
+    }
+    else if(s[i]==')'|| s[i]=='}'||s[i]==']')
+    {
+      if(check.empty()||(s[i]==')' && check.top()!='(')|| (s[i]=='}' && check.top()!='{')||(s[i]==']' && check.top()!='['))
+      {
+        return false;
+      }
+      check.pop();
+    }
+  }
+  if(check.empty())
+  {
+    return true;
+  }
+  else
+  {
+    return false;
+  }
+  
+}

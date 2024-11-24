@@ -1,0 +1,14 @@
+int visit(TreeNode* root, int level)
+    {
+        if(root==NULL)
+        {
+            return level;
+        }
+        level+=1;
+        int left=visit(root->left,level);
+        int right=visit(root->right,level);
+        return max(left,right);
+    }
+    int maxDepth(TreeNode* root) {
+        return visit(root,0);
+    }

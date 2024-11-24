@@ -1,0 +1,46 @@
+int visit(Node* root,int level)
+{
+  if(root==NULL)
+  {
+    return level;
+  }
+  level=level+1;
+  int left=visit(root->left,level);
+  int right=visit(root->right,level);
+  return max(left,right);
+}
+
+
+int visibleNodes(Node* root) {
+  // Write your code here
+  /*
+  if(root==NULL)
+  {
+    return 0;
+  }
+  queue<Node*>q;
+  q.push(root);
+  int count=0;
+  while(!q.empty())
+  {
+    int size=q.size();
+    count++;
+    for(int i=0;i<size;i++)
+    {
+      Node* current=q.front();
+      q.pop();
+      if(current->left!=NULL)
+      {
+        q.push(root->left);
+      }
+      if(current->right!=NULL)
+      {
+        q.push(root->right);
+      }
+    }
+    
+  }
+  cout<<count;
+  return count;*/
+  return visit(root,0);
+}

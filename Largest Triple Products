@@ -1,0 +1,47 @@
+vector <int> findMaxProduct(vector <int> arr) {
+  // Write your code here
+  priority_queue<int, vector<int>, greater<int>>q;
+  vector<int>result;
+  for(int i=0;i<arr.size();i++)
+  {
+    q.push(arr[i]);
+    if(q.size()>3)
+    {
+      q.pop();
+    }
+    if(i<2)
+    {
+      result.push_back(-1);
+    }
+    else
+    {
+      
+      vector<int>temp;
+      int product=1;
+      while(!q.empty())
+      {
+        int a=q.top();
+        temp.push_back(a);
+        product*=a;
+        q.pop();
+
+      }
+      result.push_back(product);
+      for(int nums : temp)
+      {
+        q.push(nums);
+      }
+      temp.clear();
+      
+     }
+   
+    
+  }
+  
+  return result;
+}
+
+
+
+
+

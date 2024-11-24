@@ -1,0 +1,28 @@
+int getTotalTime(vector <int> arr) {
+  // Write your code here
+  priority_queue <int>q;
+  for(int nums:arr)
+  {
+    q.push(nums);
+  }
+  int penal=0;
+  while(q.size()>1)
+  {
+    int a=q.top();
+    q.pop();
+     int b=0;
+    if(!q.empty())
+    {
+      b=q.top();
+      q.pop();
+      
+    }
+    int sum=a+b;
+    //cout<<sum<<" ";
+    penal+=sum;
+   
+    q.push(sum);
+    
+  }
+  return penal;
+}

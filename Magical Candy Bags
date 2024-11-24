@@ -1,0 +1,19 @@
+int maxCandies(vector <int> arr, int k) {
+  // Write your code here
+  priority_queue<int>q;
+  for(int nums: arr)
+  {
+    q.push(nums);
+  }
+  int count=0;
+  for(int i=0;i<k;i++)
+  {
+    int a=q.top();
+    count+=a;
+    a=a/2;
+    q.pop();
+    q.push(a);
+  }
+  return count;
+  
+}

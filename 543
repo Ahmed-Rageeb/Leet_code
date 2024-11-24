@@ -1,0 +1,18 @@
+int visit(TreeNode* root, int & num)
+    {
+        if(root==NULL)
+        {
+            return 0;
+        }
+        int left= visit(root->left,num);
+        int right=visit(root->right,num);
+        num=max(num,left+right);
+        
+        return 1+max(left,right);
+    }
+    int diameterOfBinaryTree(TreeNode* root) {
+        int num=0;
+        visit(root,num);
+        return num;
+        
+    }

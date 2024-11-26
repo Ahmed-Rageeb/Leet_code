@@ -1,0 +1,45 @@
+class Solution {
+public:
+    string minRemoveToMakeValid(string s) {
+        stack<int>st;
+        string result;
+        int si=s.length();
+        int *check= new int[si];
+        fill(check, check + si, 1);
+        for(int i=0;i<s.length();i++)
+        {
+            if(s[i]=='(')
+            {
+                st.push(i);
+                
+
+            }
+            else if(s[i]==')')
+            {
+                if(!st.empty())
+                {
+                    st.pop();
+                }
+                else
+                {
+                    check[i]=0;
+                }
+            }
+
+        }
+       while(!st.empty())
+       {
+        check[st.top()]=0;
+        st.pop();
+       }
+       for(int i=0;i<s.length();i++)
+       {
+        if(check[i]==1)
+        {
+            result.push_back(s[i]);
+        }
+       }
+        return result;
+    
+    }
+};

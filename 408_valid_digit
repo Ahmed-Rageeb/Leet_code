@@ -1,0 +1,41 @@
+class Solution {
+public:
+    bool validWordAbbreviation(string word, string abbr) {
+        int abin=0;
+        int woin=0;
+        while(abin<abbr.length() && woin<word.length())
+        {
+
+            if(isdigit(abbr[abin]))
+            {
+                if(abbr[abin]=='0')
+                {
+                    return false;
+                }
+                int digit=0;
+                while(isdigit(abbr[abin]) && abin<abbr.length())
+                {
+                    digit=digit*10+(abbr[abin]-'0');
+                    abin++;
+                }
+                woin+=digit;
+                 if(woin>word.length())
+                    {
+                        return false;
+                    }   
+
+            }
+           
+            else
+            {
+                if(word[woin]!=abbr[abin])
+                {
+                    return false;
+                }
+                woin++;
+                abin++;
+            }
+        }
+        return (abin==abbr.length() && woin==word.length());
+    }
+};

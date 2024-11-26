@@ -1,0 +1,36 @@
+class Solution {
+public:
+    bool vali(string s, int i, int h)
+    {
+        int l=h;
+        for(int j=i;j<=h;j++)
+        {
+            if(s[j]==s[l])
+            {
+                l--;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+    bool validPalindrome(string s) {
+        int len=s.length();
+        int h=len-1;
+        for(int i=0;i<len/2;i++)
+        {
+            if(s[i]==s[h])
+            {
+                h--;
+            }
+            else
+            {
+               return vali(s,i,h-1) || vali(s,i+1,h);
+            }
+
+        }
+        return true;
+    }
+};

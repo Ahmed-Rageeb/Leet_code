@@ -1,0 +1,24 @@
+class Solution {
+public:
+
+  
+    Node* lowestCommonAncestor(Node* p, Node* q)
+    {
+        vector<int>visit;
+        while(p->parent!=NULL) 
+        {
+            visit.push_back(p->val);
+            p=p->parent;
+        }
+        while(q->parent!=NULL)
+        {
+            auto it=find(visit.begin(),visit.end(),q->val);
+            if(it!=visit.end())
+            {
+                return q;
+            }
+            q=q->parent;
+        }
+       return q; 
+    }
+};

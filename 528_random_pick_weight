@@ -1,0 +1,33 @@
+class Solution {
+public:
+    long long totalsum;
+    vector<int>presum;
+    Solution(vector<int>& w) {
+        totalsum=0;
+        for(int i: w)
+        {
+            totalsum+=i;
+            presum.push_back(totalsum);
+
+        }
+    }
+    
+    int pickIndex() {
+        int target=rand()%totalsum+1;
+         int left=0;
+         int right=presum.size()-1;
+         while(left<right)
+         {
+            int mid=left+((right-left)/2);
+            if(presum[mid]<target)
+            {
+                left=mid+1;
+            }
+            else
+            {
+                right=mid;
+            }
+         }
+         return left;
+    }
+};

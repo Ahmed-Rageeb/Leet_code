@@ -1,0 +1,34 @@
+void dfs(Node* root, string s, vector<vector<int>>&v)
+{
+  if(!root)
+  {
+    return;
+  }
+  int c=s[root->val-1]-'a';
+  v[root->val][c]++;
+  for(auto child: root->children)
+  {
+    dfs(child,s,v);
+    for(int i=0;i<26;i++)
+    {
+      v[root->val][i]+=v[child->val][i];
+    }
+  }
+}
+vector<int> countOfNodes(Node* root, vector<Query> queries, string s) {
+  // Write your code here
+  int n=s.size();
+  vector<vector<int>>v(n+1,vector<int>(26,0));
+  dfs(root,s,v);
+  vector<int>res;
+  for(auto q: queries)
+  {
+    int in=q.c-'a';
+    res.push_back(v[q.u][in]);
+  }
+  
+  return res;
+}
+
+
+

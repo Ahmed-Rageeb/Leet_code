@@ -1,0 +1,68 @@
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    vector<int> distanceK(TreeNode* root, TreeNode* target, int k) {
+        vector<int>res;
+        if(root==NULL)
+        {
+            return res;
+        }
+        unordered_map<TreeNode*,TreeNode*>m;
+        unordered_set<TreeNode*>s;
+        makeparent(root,NULL,m);
+        queue<pair<TreeNode*,int>>q;
+        q.push({target,0});
+        s.insert(target);
+        while(!q.empty())
+        {
+            auto[node,cost]=q.front();
+            q.pop();
+            if(cost==k)
+            {
+                res.push_back(node->val);
+                continue;
+            }
+            if(node->left && s.find(node->left)==s.end())
+            {
+                q.push({node->left,cost+1});
+                s.insert(node->left);
+            }
+            if(node->right && s.find(node->right)==s.end())
+            {
+                q.push({node->right,cost+1});
+                s.insert(node->right);
+            }
+            
+            TreeNode* parent=m[node];
+            if(parent && s.find(parent)==s.end())
+            {
+                q.push({parent,cost+1});
+                s.insert(parent);
+            }
+        }
+
+        return res;
+    
+    
+    }
+    void makeparent(TreeNode* root, TreeNode* parent, unordered_map<TreeNode*,TreeNode*>&m )
+    {
+        if(root==NULL)
+        {
+            return;
+        }
+        m[root]=parent;
+        makeparent(root->left,root,m);
+        makeparent(root->right,root,m);
+        
+
+    }
+};

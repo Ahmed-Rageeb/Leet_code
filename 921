@@ -1,0 +1,26 @@
+class Solution {
+public:
+    int minAddToMakeValid(string s) {
+        int bal=0;
+        int add=0;
+        for(int i=0;i<s.length();i++)
+        {
+            if(s[i]=='(')
+            {
+                bal++;
+            }
+            else
+            {
+                if(bal>0)
+                {
+                    bal--;
+                }
+                else
+                {
+                    add++;
+                }
+            }
+        }
+        return bal+add;
+    }
+};

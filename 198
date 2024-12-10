@@ -1,0 +1,31 @@
+class Solution {
+public:
+    map<int,int>m;
+    int visit(vector<int>nums, int i)
+    {
+        if(i==0)
+        {
+            return nums[i];
+        }
+        else if(i==1)
+        {
+            return max(nums[i],nums[i-1]);
+        }
+        else
+        {
+            if(m.find(i)==m.end())
+            {
+                m[i]=max(visit(nums,i-1),visit(nums,i-2)+nums[i]);
+            }
+        }
+        return m[i];
+    }
+    int rob(vector<int>& nums) {
+        if(nums.empty())
+        {
+            return 0;
+        }
+        return visit(nums,nums.size()-1);
+        
+    }
+};

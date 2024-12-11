@@ -1,0 +1,25 @@
+class Solution {
+public:
+    string mergeAlternately(string word1, string word2) {
+        int sizew1=word1.size();
+        int sizew2=word2.size();
+        int total=sizew1+sizew2;
+        string res;
+        int w1in=0;
+        int w2in=0;
+        for(int i=0;i<total;i++)
+        {
+            if(w1in<sizew1)
+            {
+                res+=word1[w1in];
+                w1in++;
+            }
+            if(w2in<sizew2)
+            {
+                res+=word2[w2in];
+                w2in++;
+            }
+        }
+        return res;
+    }
+};

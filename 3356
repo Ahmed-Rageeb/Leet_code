@@ -1,0 +1,52 @@
+class Solution {
+public:
+    bool visit(vector<int>& nums, vector<vector<int>>& queries,int k)
+    {
+        int n=nums.size();
+        vector<int>diff(n+1,0);
+        for(int i=0;i<k;i++)
+        {
+            int l=queries[i][0];
+            int r=queries[i][1];
+            int val=queries[i][2];
+            diff[l]-=val;
+            if(r+1<n)
+            {
+                diff[r+1]+=val;
+            }
+        }
+        int cur=0;
+        for(int i=0;i<n;i++)
+        {
+            cur+=diff[i];
+            if(cur+nums[i]>0)
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+    int minZeroArray(vector<int>& nums, vector<vector<int>>& queries) {
+        if( all_of(nums.begin(), nums.end(), [](int x) { return x == 0; }))
+        {
+            return 0;
+        }
+        int left=1;
+        int right=queries.size();
+        int res=-1;
+        while(left<=right)
+        {
+            int mid=left+(right-left)/2;
+            if(visit(nums,queries,mid))
+            {
+                res=mid;
+                right=mid-1;
+            }
+            else
+            {
+                left=mid+1;
+            }
+        }
+        return res;
+    }
+};

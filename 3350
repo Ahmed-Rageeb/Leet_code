@@ -1,0 +1,34 @@
+
+class Solution {
+public:
+    int maxIncreasingSubarrays(vector<int>& nums) {
+        vector<int>a(nums.size(),1);
+        int ans=0;
+        for(int i=1;i<nums.size();i++)
+        {
+            
+            if(nums[i]>nums[i-1])
+            {
+                 a[i]+=a[i-1];
+                 
+            }
+           // cout<<a[i];
+        }
+        //cout<<"\n";
+        vector<int>b(nums.size(),1);
+
+        for(int i=nums.size()-2;i>=0;i--)
+        {
+            if(nums[i]<nums[i+1])
+            {
+                b[i]+=b[i+1];
+            }
+            //cout<<b[i];
+        }
+        for(int i=0;i<nums.size()-1;i++)
+        {
+            ans=max(ans,min(a[i],b[i+1]));
+        }
+        return ans;
+    }
+};

@@ -1,0 +1,27 @@
+class Solution {
+public:
+    map<int,int>m;
+    int visit(vector<int> & cost, int i)
+    {
+        if(i==0)
+        {
+            return cost[0];
+        }
+        if(i==1)
+        {
+            return cost[1];
+        }
+        if(m.find(i)==m.end())
+        {
+            m[i]=cost[i]+min(visit(cost,i-1),visit(cost,i-2));
+        }
+        return m[i];
+    }
+    int minCostClimbingStairs(vector<int>& cost) {
+        if(cost.empty())
+        {
+            return 0;
+        }
+       return min(visit(cost,cost.size()-1),visit(cost,cost.size()-2));
+    }
+};

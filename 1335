@@ -1,0 +1,47 @@
+class Solution {
+public:
+    
+    int day;
+    int n;
+    vector<int>jobdiff;
+    vector<vector<int>>dp;
+    vector<int>hard;
+
+    int dpvisit(int i, int d)
+    {
+        if(day==d)
+        {
+            return hard[i];
+        }
+        if(dp[i][d]==-1)
+        {
+            int hard=0;
+            int best=INT_MAX;
+            for(int j=i;j<n-(day-d);j++)
+            {
+                hard=max(hard,jobdiff[j]);
+                best=min(best,hard+dpvisit(j+1,d+1));
+            }
+            dp[i][d]=best;
+        }
+        return dp[i][d];
+    }
+    int minDifficulty(vector<int>& jobDifficulty, int d) {
+        int maxh=0;        
+        n=jobDifficulty.size();
+        if (n < d) {
+            return -1;  
+        }
+        jobdiff=jobDifficulty;
+        hard = vector<int>(n);
+        for(int i=n-1;i>=0;i--)
+        {
+            maxh=max(maxh,jobDifficulty[i]);
+            hard[i] = maxh;
+        }
+        day=d;
+        vector<vector<int>>dpt(n,vector<int>(d,-1));
+        dp=dpt;
+        return dpvisit(0,1);
+    }
+};

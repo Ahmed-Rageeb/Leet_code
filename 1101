@@ -1,0 +1,61 @@
+class Solution {
+public:
+    int acqfind(vector<int>& acq,int x)
+    {
+        if(acq[x]!=x)
+        {
+            acq[x]=acqfind(acq,acq[x]);
+        }
+        return acq[x];
+    }
+    bool unions(vector<int>& acq,vector<int>& rank,int x,int y)
+    {
+        int rootx=acqfind(acq,x);
+        int rooty=acqfind(acq,y);
+        if(rootx!=rooty)
+        {
+            if(rank[rootx]>rank[rooty])
+            {
+                acq[rooty]=rootx;
+            }
+            else if(rank[rootx]<rank[rooty])
+            {
+                acq[rootx]=rooty;
+            }
+            else
+            {
+                 acq[rooty]=rootx;
+                 rank[rootx]++;
+
+            }
+            return true;
+
+        }
+        return false;
+    }
+    int earliestAcq(vector<vector<int>>& logs, int n) {
+        sort(logs.begin(),logs.end());
+        int grp=n;
+        vector<int>acq(n);
+        vector<int>rank(n,0);
+        for(int i=0;i<n;i++)
+        {
+            acq[i]=i;
+        }
+        for(auto i: logs)
+        {
+            int time=i[0];
+            int x=i[1];
+            int y=i[2];
+            if(unions(acq,rank,x,y))
+            {
+                grp--;
+            }
+            if(grp==1)
+            {
+                return time;
+            }
+        }
+        return -1;
+    }
+};

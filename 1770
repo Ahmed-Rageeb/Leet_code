@@ -1,0 +1,29 @@
+class Solution {
+public:
+    
+    int visit(vector<vector<int>>& v,vector<int> &nums,vector<int> &multipliers,int i, int left)
+    {
+        if(i==multipliers.size())
+        {
+            return 0;
+        }
+        if (v[left][i] != INT_MIN) 
+        {
+            return v[left][i];
+        }
+        int right=nums.size()-1-(i-left);
+        int mul=multipliers[i];
+        int leftpick=mul*nums[left]+visit(v,nums,multipliers,i+1,left+1);
+        int rightpick=mul*nums[right]+visit(v,nums,multipliers,i+1,left);
+        v[left][i]=max(leftpick,rightpick);
+        
+        return v[left][i];
+            
+
+    }
+    int maximumScore(vector<int>& nums, vector<int>& multipliers) {
+        int m = multipliers.size();
+        vector<vector<int>> v(m, vector<int>(m, INT_MIN)); 
+        return visit(v, nums, multipliers, 0, 0);
+    }
+};

@@ -1,0 +1,31 @@
+class Solution {
+public:
+    void backtrack(string & out, vector<string> & res, string digit, int i, string map[])
+    {
+        if(i>=digit.length())
+        {
+            res.push_back(out);
+            return;
+        }
+        int num=digit[i]-'0';
+        string val=map[num];
+        for(int j=0;j<val.length();j++)
+        {
+            out.push_back(val[j]);
+            backtrack(out,res,digit,i+1,map);
+            out.pop_back();
+        }
+        return;
+    }
+    vector<string> letterCombinations(string digits) {
+        string out;
+        vector<string>res;
+        if(digits.length()==0)
+        {
+            return res;
+        }
+        string map[10]={"","","abc",  "def", "ghi","jkl", "mno", "pqrs", "tuv", "wxyz"};
+        backtrack(out,res,digits,0,map);
+        return res;
+    }
+};

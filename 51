@@ -1,0 +1,61 @@
+class Solution {
+public:
+    bool Issave(int row,int col,vector<string> &out,int n)
+    {
+        for(int j=0;j<n;j++)
+        {
+            if(out[row][j]=='Q')
+            {
+                return false;
+            }
+        }
+        for(int i=0;i<n;i++)
+        {
+            if(out[i][col]=='Q')
+            {
+                return false;
+            }
+        }
+        for(int i=row,j=col;i>=0 && j>=0;i--,j--)
+        {
+            if(out[i][j]=='Q')
+            {
+                return false;
+            }
+        }
+        for(int i=row,j=col;i>=0 && j<n;i--,j++)
+        {
+            if(out[i][j]=='Q')
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+    void backtrack(int n,int i,vector<vector<string>> &board,vector<string> &out)
+    {
+        if(i==n)
+        {
+            board.push_back(out);
+            return;
+        }
+        for(int j=0;j<n;j++)
+        {
+            if(Issave(i,j,out,n))
+            {
+               out[i][j]='Q'; 
+               backtrack(n,i+1,board,out);
+               out[i][j]='.';
+            }
+            
+
+        }
+    }
+    vector<vector<string>> solveNQueens(int n) {
+        vector<vector<string>>board;
+        vector<string> out(n, string(n, '.'));
+        backtrack(n,0,board,out);
+        return board;
+
+    }
+};

@@ -1,0 +1,25 @@
+class Solution {
+public:
+    bool isPalindrome(int x) {
+        int invert=0;
+        int sum=x;
+        if(x<0)
+        {
+            return false;
+        }
+        else 
+        {
+            while (x>0)
+            {
+                if (invert > (INT_MAX / 10))
+                {
+                     return false;
+
+                }
+                invert=invert*10+x%10;
+                x=x/10;
+            }
+        }
+        return invert==sum;
+    }
+};

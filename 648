@@ -1,0 +1,73 @@
+class trienode
+{
+    public:
+        trienode* child[26]={};
+        bool end=false;
+};
+class trie
+{
+    public:
+        trienode* root;
+        trie()
+        {
+            root=new trienode();
+        }
+        void insert(string s)
+        {
+            trienode *node=root;
+            for(char c: s)
+            {
+                if(!node->child[c-'a'])
+                {
+                    node->child[c-'a']=new trienode();
+                }
+                node=node->child[c-'a'];
+            }
+            node->end=true;
+        }
+        string find(string s)
+        {
+            trienode* node= root;
+            string pre="";
+            for(char c:s)
+            {
+                if(!node->child[c-'a'])
+                {
+                    break;
+                }
+                node=node->child[c-'a'];
+                pre+=c;
+                if(node->end)
+                {
+                    return pre;
+                }
+
+            }
+            return s;
+
+        }
+
+};
+
+
+class Solution {
+public:
+    string replaceWords(vector<string>& dictionary, string sentence) {
+        trie t;
+        for(auto s: dictionary)
+        {
+            t.insert(s);
+        }
+        stringstream ss(sentence);
+        string word,result="";
+        while(ss>>word)
+        {
+            if(!result.empty())
+            {
+                result+=" ";
+            }
+            result+=t.find(word);
+        }
+        return result;
+    }
+};

@@ -1,0 +1,36 @@
+class Solution {
+public:
+    vector<string> topKFrequent(vector<string>& words, int k) {
+        unordered_map<string,int>m;
+        for(auto word:words)
+        {
+            m[word]++;
+        }
+        auto cmp=[](pair<int,string>a,pair<int,string>b)
+        {
+            if(a.first==b.first)
+            {
+                return a.second<b.second;
+            }
+            return a.first>b.first;
+        };
+        priority_queue<pair<int,string>,vector<pair<int,string>>,decltype(cmp)>pq;
+        for(auto word:m)
+        {
+            pq.emplace(word.second,word.first);
+            if(pq.size()>k)
+            {
+                pq.pop();
+            }
+
+        }
+        vector<string>v;
+        while(!pq.empty())
+        {
+            v.push_back(pq.top().second);
+            pq.pop();
+        }
+        reverse(v.begin(),v.end());
+        return v;
+    }
+};

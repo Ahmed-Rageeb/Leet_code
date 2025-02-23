@@ -1,0 +1,58 @@
+
+class Solution {
+public:
+    vector<int>parent;
+    vector<int>rank;
+    int visit(int x)
+    {
+        if(x!=parent[x])
+        {
+            parent[x]=visit(parent[x]);
+        }
+        return parent[x];
+    }
+    bool union_set(int u,int v)
+    {
+        int rootx=visit(u);
+        int rooty=visit(v);
+        if(rootx==rooty)
+        {
+            return false;
+        }
+        if(rank[rootx]>rank[rooty])
+        {
+            parent[rooty]=rootx;
+            rank[rootx]++;
+        }
+        else if(rank[rootx]<rank[rooty])
+        {
+            parent[rootx]=rooty;
+            rank[rooty]++;
+        }
+        else
+        {
+            parent[rooty]=rootx;
+            rank[rootx]++;
+        }
+        return true;
+    }
+    vector<int> findRedundantConnection(vector<vector<int>>& edges) {
+        parent.resize(edges.size()+1);
+        rank.resize(edges.size(),0);
+        for(int i=0;i<edges.size();i++)
+        {
+            parent[i]=i;
+        }
+        for(auto edge:edges)
+        {
+            int u=edge[0];
+            int v=edge[1];
+            if(!union_set(u,v))
+            {
+                return edge;
+            }
+        }
+        return {};
+            
+    }
+};

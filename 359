@@ -1,0 +1,38 @@
+class Logger {
+public:
+    unordered_map<string,int>m;
+    Logger() {
+        
+    }
+    
+    bool shouldPrintMessage(int timestamp, string message) {
+        if(m.find(message)!=m.end())
+        {
+            int time=m[message];
+            if(timestamp>=time+10)
+            {
+                m[message]=timestamp;
+
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        else
+        {
+             m[message]=timestamp;
+             cout<<m[message];
+            return true;
+
+        }
+        
+    }
+};
+
+/**
+ * Your Logger object will be instantiated and called as such:
+ * Logger* obj = new Logger();
+ * bool param_1 = obj->shouldPrintMessage(timestamp,message);
+ */

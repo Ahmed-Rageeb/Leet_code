@@ -1,0 +1,32 @@
+class Solution {
+public:
+    int deleteAndEarn(vector<int>& nums) {       
+        unordered_map<int,int>m;
+        int max= *max_element(nums.begin(),nums.end());
+        vector<int>points(max+1,0);
+        for(auto num:nums)
+        {
+            points[num]+=num;
+        }
+        return dp(max,points,m);
+    }
+    int dp(int i, vector<int>& points, unordered_map<int,int> &m)
+    {
+        if(i==0)
+        {
+            return points[0];
+        }
+        if(i==1)
+        {
+            return max(points[0],points[1]);
+        }
+        if(m.find(i)!=m.end())
+        {
+            return m[i];
+        }
+        int take=points[i]+dp(i-2,points,m);
+        int skip=dp(i-1,points,m);
+        m[i]=max(take,skip);
+        return m[i];
+    }
+};

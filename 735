@@ -1,0 +1,30 @@
+class Solution {
+public:
+    vector<int> asteroidCollision(vector<int>& asteroids) {
+        vector<int> res;
+        for (int as : asteroids) 
+        {
+            if (as > 0) 
+            {
+                res.push_back(as);
+            } 
+            else 
+            {
+                while (!res.empty() && res.back() > 0 && res.back() < abs(as))
+                {
+                    res.pop_back();
+                }
+
+                if (!res.empty() && res.back() == abs(as)) 
+                {
+                    res.pop_back(); // both destroy
+                } 
+                else if (res.empty() || res.back() < 0) 
+                {
+                    res.push_back(as); // no collision
+                }
+            }
+        }
+        return res;
+    }
+};

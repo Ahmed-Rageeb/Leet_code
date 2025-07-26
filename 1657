@@ -1,0 +1,37 @@
+class Solution {
+public:
+    bool closeStrings(string word1, string word2) {
+        map<char,int>m1,m2;
+        vector<int>v1,v2;
+        if(word1.length()!=word2.length())
+        {
+            return false;
+        }
+        for(char c: word1)
+        {
+            m1[c]++;
+        }
+        for(char c: word2)
+        {
+            m2[c]++;
+        }
+        for(auto c:m1)
+        {
+            if(m2.find(c.first)==m2.end())
+            {
+                return false;
+            }
+        }
+        for(auto c:m1)
+        {
+            v1.push_back(c.second);
+        }
+        for(auto c:m2)
+        {
+            v2.push_back(c.second);
+        }
+        sort(v1.begin(),v1.end());
+        sort(v2.begin(),v2.end());
+        return v1==v2? true:false;
+    }
+};

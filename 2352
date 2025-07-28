@@ -1,0 +1,31 @@
+class Solution {
+public:
+    int equalPairs(vector<vector<int>>& grid) {
+        map<vector<int>,int>m1;
+        map<vector<int>,int>m2;
+        for(int i=0;i<grid.size();i++)
+        {
+            m1[grid[i]]++;
+        }
+
+        for(int i=0;i<grid.size();i++)
+        {
+            vector<int>temp;
+           for(int j=0;j<grid[i].size();j++)
+           {
+            temp.push_back(grid[j][i]);
+           }
+           m2[temp]++;
+        }
+        int count=0;
+        for(auto check:m1)
+        {
+            if(m2.count(check.first))
+            {
+                count+=check.second*m2[check.first];
+            }
+        }
+        return count;
+
+    }
+};

@@ -1,0 +1,42 @@
+class Solution {
+public:
+    string decodeString(string s) {
+       stack<string>st;
+       stack<int>nus;
+       int num=0;
+       string ans="";
+       for(char c: s)
+       {
+        if(isdigit(c))
+        {
+            num=num*10+(c-'0');
+        }
+        else if(c=='[')
+        {
+            st.push(ans);
+            nus.push(num);
+            num=0;
+            ans="";
+        }
+        else if(c==']')
+        {
+            int tempn=nus.top();
+            nus.pop();
+            string prev=st.top();
+            st.pop();
+            string temps="";
+            for(int i=0;i<tempn;i++)
+            {
+                temps+=ans;
+            }
+            ans=prev+temps;
+
+        }
+        else
+        {
+            ans+=c;
+        }
+       }
+       return ans;
+    }
+};

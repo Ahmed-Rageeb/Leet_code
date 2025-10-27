@@ -1,0 +1,45 @@
+class Solution {
+public:
+    string addStrings(string num1, string num2) {
+        string res;
+        int i=num1.size()-1;
+        int j=num2.size()-1;
+        int fir=0, sec=0;
+        int car=0;
+        while(true)
+        {
+            if(i>=0)
+            {
+                fir=num1[i]-'0';
+                i--;
+            }
+
+            if(j>=0)
+            {
+                sec=num2[j]-'0';
+                j--;
+            }
+            int add=fir+sec+car;
+            car=0;
+            if(add>=10)
+            {
+                car=add/10;
+                add=add%10;
+            }
+            res+=to_string(add);
+            if(i<0 && j<0)
+            {
+                break;
+            }
+            fir=0;
+            sec=0;
+        }
+        if(car!=0)
+        {
+            res+=to_string(car);
+        }
+        reverse(res.begin(),res.end());
+        return res;
+        
+    }
+};

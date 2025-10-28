@@ -1,0 +1,23 @@
+class Solution {
+public:
+    int expand(int left,int right,int siz,string s)
+    {
+        int count=0;
+        while(left>=0 && right<=siz && s[left]==s[right] )
+        {
+            count++;
+            left--;
+            right++;
+        }
+        return count;
+    }
+    int countSubstrings(string s) {
+        int res=0;
+        for(int i=0;i<s.length();i++)
+        {
+            res+=expand(i,i,s.length()-1,s);
+            res+=expand(i,i+1,s.length()-1,s);
+        }
+        return res;
+    }
+};

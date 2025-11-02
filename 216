@@ -1,0 +1,31 @@
+class Solution {
+public:
+    void back(vector<int>&cur,vector<vector<int>>&res,int idx,int track,int k,int n,int sum)
+    {
+        if(track==k)
+        {
+            if(sum==n)
+            {
+                res.push_back(cur);
+            }
+            return;
+
+        }
+        for(int i=idx;i<=9;i++)
+        {
+            sum+=i;
+            cur.push_back(i);
+            back(cur,res,i+1,track+1,k,n,sum);
+            cur.pop_back();
+            sum-=i;
+        }
+
+
+    }
+    vector<vector<int>> combinationSum3(int k, int n) {
+        vector<int>cur;
+        vector<vector<int>>res;
+        back(cur,res,1,0,k,n,0);
+        return res;
+    }
+};

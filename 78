@@ -1,0 +1,21 @@
+class Solution {
+public:
+    void back(vector<vector<int>> & res, vector<int> & cur, int start, vector<int>&num)  
+    {
+        res.push_back(cur);
+        for(int i= start; i<num.size();i++)
+        {
+            cur.push_back(num[i]);
+            back(res,cur,i+1,num);
+            cur.pop_back();
+
+        }
+    }
+    vector<vector<int>> subsets(vector<int>& nums) {
+        vector<vector<int>>res;
+        vector<int>cur;
+        back(res,cur,0,nums);
+        return res;
+        
+    }
+};

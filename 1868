@@ -1,0 +1,21 @@
+class Solution {
+public:
+    vector<double> medianSlidingWindow(vector<int>& nums, int k) {
+        vector<double>ans;
+        for(int i=0;i+k<=nums.size();i++)
+        {
+            vector<int>win(nums.begin()+i,nums.begin()+i+k);
+            sort(win.begin(),win.end());
+            if(k%2!=0)
+            {
+                ans.push_back(win[k/2]);
+            }
+            else
+            {
+                ans.push_back(((double)win[k/2] + (double)win[k/2 - 1]) / 2.0);
+
+            }
+        }
+        return ans;
+    }
+};

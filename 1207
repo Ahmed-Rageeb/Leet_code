@@ -1,0 +1,20 @@
+class Solution {
+public:
+    bool uniqueOccurrences(vector<int>& arr) {
+        map<int,int>m;
+        for(int i=0;i<arr.size();i++)
+        {
+            m[arr[i]]++;
+        }
+        unordered_set<int> seen;
+        for(auto [num,count]:m)
+        {
+            if(seen.find(count)!=seen.end())
+            {
+                return false;
+            }
+            seen.insert(count);
+        }
+        return true;
+    }
+};

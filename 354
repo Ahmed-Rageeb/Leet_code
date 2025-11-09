@@ -1,0 +1,35 @@
+class Solution {
+public:
+    int maxEnvelopes(vector<vector<int>>& envelopes) {
+        auto cmp=[](vector<int>a,vector<int>b)
+        {
+            if(a[0]==b[0])
+            {
+                return a[1]>b[1];
+            }
+            
+                return a[0]<b[0];
+            
+        };
+        sort(envelopes.begin(),envelopes.end(),cmp);
+        vector<int>hei;
+        for(auto a:envelopes)
+        {
+            hei.push_back(a[1]);
+        }
+        vector<int>list;
+        for(int h:hei)
+        {
+            auto it=lower_bound(list.begin(),list.end(),h);
+            if(it==list.end())
+            {
+                list.push_back(h);
+            }
+            else
+            {
+                *it=h;
+            }
+        }
+        return list.size();
+    }
+};

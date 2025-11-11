@@ -1,0 +1,31 @@
+class Solution {
+public:
+    vector<int> plusOne(vector<int>& digits) {
+        int car=0;
+        vector<int>ans;
+        for(int i=digits.size()-1;i>=0;i--)
+        {
+            int sum=0;
+            if(i==digits.size()-1)
+            {
+                sum=digits[i]+1;
+            }
+            else
+            {
+                sum=digits[i]+car;
+            }
+            car=sum/10;
+            sum=sum%10;
+           
+            ans.push_back(sum);
+
+        }
+        if(car!=0)
+        {
+            ans.push_back(car);
+        }
+        reverse(ans.begin(),ans.end());
+        return ans;
+        
+    }
+};

@@ -1,0 +1,39 @@
+class Solution {
+public:
+    void wallsAndGates(vector<vector<int>>& rooms) {
+        queue<pair<int,pair<int,int>>>q;
+        for(int i=0;i<rooms.size();i++)
+        {
+            for(int j=0;j<rooms[0].size();j++)
+            {
+                if(rooms[i][j]==0)
+                {
+                     q.push({0,{i,j}});
+                }
+            }
+        }
+        vector<vector<int>>dir={{0,1},{0,-1},{1,0},{-1,0}};
+        while(!q.empty())
+        {
+            auto[cost,coor]=q.front();
+            q.pop();
+            for(auto d:dir)
+            {
+                int nx=coor.first+d[0];
+                int ny=coor.second+d[1];
+                if(nx>=0 && ny>=0 && nx<rooms.size() && ny<rooms[0].size() && rooms[nx][ny]==2147483647 &&  rooms[nx][ny]!=-1)
+                {
+                    q.push({cost+1,{ nx,ny}});
+                    rooms[nx][ny]=cost+1;
+
+
+                }
+            }
+            
+
+        }
+        
+       
+
+    }
+};

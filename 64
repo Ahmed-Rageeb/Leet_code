@@ -1,0 +1,27 @@
+class Solution {
+public:
+
+    int minim(vector<vector<int>>& grid,vector<vector<int>>& visit,int i,int j)
+    {
+        if(i>=grid.size() || j>=grid[0].size())
+        {
+            return INT_MAX;
+        }
+        if(i==grid.size()-1 && j==grid[0].size()-1)
+        {
+            return grid[i][j];
+        }
+        if(visit[i][j]!=-1)
+        {
+            return visit[i][j];
+        }
+        int right=minim(grid,visit,i,j+1);
+        int down=minim(grid,visit,i+1,j);
+        visit[i][j]=grid[i][j]+min(right,down);
+        return visit[i][j];
+    }
+    int minPathSum(vector<vector<int>>& grid) {
+        vector<vector<int>>visit(grid.size(), vector<int>(grid[0].size(), -1));
+        return minim(grid,visit,0,0);
+    }
+};

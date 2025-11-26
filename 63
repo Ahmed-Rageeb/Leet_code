@@ -1,0 +1,41 @@
+class Solution {
+public:
+    int count=0;
+    int path(vector<vector<int>>& obstacleGrid,vector<vector<int>>& visit,int i,int j)
+    {
+        if(j>=obstacleGrid[0].size() || i>=obstacleGrid.size())
+        {
+            return 0;
+        }
+        if(i==obstacleGrid.size()-1 && j==obstacleGrid[0].size()-1 && obstacleGrid[i][j]==0)
+        {
+            return 1;
+        }
+        if(obstacleGrid[i][j]==1)
+        {
+            return 0;
+        }
+        
+    
+        
+        if(visit[i][j]!=-1)
+        {
+            return visit[i][j];
+        }
+        int down=path(obstacleGrid,visit,i+1,j);
+        int right=path(obstacleGrid,visit,i,j+1);
+        visit[i][j]=down+right;
+        return visit[i][j];
+        
+    }
+    int uniquePathsWithObstacles(vector<vector<int>>& obstacleGrid) {
+        vector<vector<int>>visit(obstacleGrid.size(),vector<int>(obstacleGrid[0].size(),-1));
+        if(obstacleGrid[0][0]==1)
+        {
+            return 0;
+        }
+        return path(obstacleGrid,visit,0,0);
+        
+        
+    }
+};

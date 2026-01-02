@@ -1,0 +1,28 @@
+class Solution {
+public:
+    vector<vector<int>>v;
+    int visit(vector<int>& nums,int i,int prev)
+    {
+        if(i==nums.size())
+        {
+            return 0;
+        }
+
+        if(v[i][prev+1]!=-1)
+        {
+            return v[i][prev+1];
+        }
+        int take=0;
+
+        if(prev==-1 || nums[i]>nums[prev])
+        {
+           take= 1+ visit(nums,i+1,i);
+        }
+        int skip=visit(nums,i+1,prev);
+        return v[i][prev+1]= std::max(take,skip);
+    }
+    int lengthOfLIS(vector<int>& nums) {
+        v.assign(nums.size(),vector<int>(nums.size()+1,-1));
+        return visit(nums,0,-1);
+    }
+};

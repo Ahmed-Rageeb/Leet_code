@@ -1,0 +1,33 @@
+class Solution {
+public:
+    int dpvisit(int i, int amount,vector<int> &coins,vector<vector<int>> &visit)
+    {
+        if(amount==0)
+        {
+            return 1;
+        }
+        if(i==coins.size())
+        {
+            return 0;
+        }
+        if(amount<0)
+        {
+            return 0;
+        }
+        if(visit[i][amount]!=-1)
+        {
+            return visit[i][amount];
+        }
+        int take=0;
+        if(coins[i]<=amount)
+        {       
+            take= dpvisit(i,amount-coins[i],coins,visit);
+        }
+        int skip=dpvisit(i+1,amount,coins,visit);
+        return visit[i][amount]=take+skip;
+    }
+    int change(int amount, vector<int>& coins) {
+        vector<vector<int>> visit(coins.size(), vector<int>(amount + 1, -1));
+        return dpvisit(0,amount,coins,visit);
+    }
+};

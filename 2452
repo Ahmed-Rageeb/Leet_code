@@ -1,0 +1,39 @@
+class Solution {
+public:
+    vector<string> twoEditWords(vector<string>& queries, vector<string>& dictionary) {
+        vector<string>ans;
+        bool ok;
+        for(auto p:queries)
+        {
+            for(auto q:dictionary)
+            {
+                int count=0;
+                ok=false;
+                if(p.length()!=q.length())
+                {
+                    continue;
+                }
+                else
+                {
+                    for(int i=0;i<p.length();i++)
+                    {
+                        if(p[i]!=q[i])
+                        {
+                            count++;
+                        }
+                    }
+                    if(count<=2)
+                    {
+                        ok=true;
+                        break;
+                    }
+                }
+            }
+            if(ok)
+            {
+                ans.push_back(p);
+            }
+        }
+        return ans;
+    }
+};

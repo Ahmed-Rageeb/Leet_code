@@ -1,0 +1,32 @@
+class Solution {
+public:
+    bool rotateString(string s, string goal) {
+        if(s.length()==goal.length())
+        {
+            if(s==goal)
+            {
+                return true;
+            }
+            string temp=s;
+            for(int i=0;i<s.length()-1;i++)
+            {
+                char temp1=s[i];
+                for(int j=0;j<s.length();j++)
+                {
+                    temp[j]=temp[j+1];
+                }
+                temp[s.length()-1]=temp1;
+                if(temp==goal)
+                {
+                    return true;
+                }
+
+            }
+        }
+        else
+        {
+            return false;
+        }
+        return false;
+    }
+};

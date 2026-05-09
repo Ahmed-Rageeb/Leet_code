@@ -1,0 +1,49 @@
+class Solution {
+public:
+    vector<vector<int>> rotateGrid(vector<vector<int>>& grid, int k) {
+        int row=grid.size();
+        int col =grid[0].size();
+        int layer=min(col,row)/2;
+        for(int i=0;i<layer;i++)
+        {
+            vector<int>v;
+            vector<pair<int,int>>index;
+            int startcol=i;
+            int endcol=col-i-1;
+            int startrow=i;
+            int endrow=row-1-i;
+
+            for(int j=startcol;j<=endcol;j++)
+            {
+                v.push_back(grid[startrow][j]);
+                index.push_back({startrow,j});
+            }
+
+            for(int j=startrow+1;j<=endrow;j++)
+            {
+                v.push_back(grid[j][endcol]);
+                index.push_back({j,endcol});
+            }
+
+            for(int j=endcol-1;j>=startcol;j--)
+            {
+                v.push_back(grid[endrow][j]);
+                index.push_back({endrow,j});
+            }
+
+            for(int j=endrow-1;j>startrow;j--)
+            {
+                v.push_back(grid[j][startcol]);
+                index.push_back({j,startcol});
+            }
+            int rot=k%v.size();
+            for(int l=0;l<v.size();l++)
+            {
+                auto[x,y]=index[l];
+                grid[x][y]=v[(l+rot)%v.size()];
+            }
+        }
+
+        return grid;
+        }
+    };

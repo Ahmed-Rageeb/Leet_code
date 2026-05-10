@@ -1,0 +1,59 @@
+class Solution {
+public:
+    vector<vector<char>> rotateTheBox(vector<vector<char>>& boxGrid) {
+
+        int m = boxGrid.size();
+        int n = boxGrid[0].size();
+
+        vector<vector<char>> rotated(n, vector<char>(m));
+
+        for(int i = 0; i < m; i++) {
+            for(int j = 0; j < n; j++) {
+                rotated[j][m - 1 - i] = boxGrid[i][j];
+            }
+        }
+        for(int i=0;i<m;i++)
+        {
+            int first=0;
+            bool obstacle =false;
+            bool firsttrue=false;
+            for(int j=0;j<n;j++)
+            {
+                if(!firsttrue && rotated[j][i]=='#')
+                {
+                    first=j;
+                    firsttrue=true;
+                }
+                if(rotated[j][i]=='*')
+                {
+                    first=j;
+                    obstacle=true;
+                }
+                if(obstacle && rotated[j][i]=='#')
+                {
+                    first=j;
+                    obstacle=false;
+
+                }
+                if(rotated[first][i]=='#' && rotated[j][i]=='.')
+                {
+                    if(!obstacle)
+                    {
+                        rotated[j][i]='#';
+                        rotated[first][i]='.';                     
+                        first=first+1;
+                        if(first < n && rotated[first][i]=='*')
+                        {
+                            while(first < n && rotated[first][i]!='#')
+                            {
+                                first++;
+                            }
+                        }
+                    }
+
+                }
+            }
+        }
+       return rotated; 
+    }
+};

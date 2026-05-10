@@ -1,0 +1,34 @@
+class Solution {
+public:
+    int dpvisit(vector<int>& nums,vector<int>& visit,int i,int target)
+    {
+        if(i==nums.size()-1)
+        {
+            return 0;
+        }
+        if(visit[i]!=-2)
+        {
+            return visit[i];
+        }
+        int ans=-1;
+        for(int j=i+1;j<nums.size();j++)
+        {
+            if(abs(nums[i]-nums[j])<=target)
+            {
+                int next=dpvisit(nums,visit,j,target);
+                if(next!=-1)
+                {
+                    ans=max(ans,1+next);
+                }
+            }
+            
+        }
+        visit[i]=ans;
+        return ans;
+    }
+    int maximumJumps(vector<int>& nums, int target) {
+        
+        vector<int>visit(nums.size(),-2);
+        return dpvisit(nums,visit,0,target);
+    }
+};

@@ -1,0 +1,35 @@
+class Solution {
+public:
+    int MOD = 1e9 + 7;
+    int visit(int low, int high, int zero, int one,vector<int>&dp,int len)
+    {
+        
+        if(len>high)
+        {
+            return 0;
+        }
+
+        
+        if(dp[len]!=-1)
+        {
+            return dp[len];
+        }
+
+        int ans=0;
+
+        if(low<=len)
+        {
+            ans=1;;
+        }
+
+        ans=(ans+visit(low,high,zero,one,dp,len+zero))%MOD;
+        ans=(ans+visit(low,high,zero,one,dp,len+one))%MOD;
+        return dp[len]=ans;
+
+    }
+    int countGoodStrings(int low, int high, int zero, int one) {
+        vector<int>dp(high+1,-1);
+        return visit(low,high,zero,one,dp,0);
+        
+    }
+};

@@ -1,0 +1,41 @@
+class Solution {
+public:
+    int longestCommonPrefix(vector<int>& arr1, vector<int>& arr2) {
+        map<string,int>m;
+        int maxlen=0;
+        for(int i=0;i<arr1.size();i++)
+        {
+            string s=to_string(arr1[i]);
+            string temp;
+            for(int j=0;j<s.length();j++)
+            {
+                temp+=s[j];
+                m[temp]=j+1;
+            }
+        }
+
+        for(int i=0;i<arr2.size();i++)
+        {
+            string s=to_string(arr2[i]);
+            int len=0;
+            string temp;
+            for(int j=0;j<s.length();j++)
+            {
+                temp+=s[j];
+                if(m.find(temp)!=m.end())
+                {
+                    auto it=m.find(temp);
+                    len+=it->second;
+                }
+                if(len>maxlen)
+                {
+                    maxlen=len;
+                }
+                len=0;
+            }
+        }
+        
+            return maxlen;
+        
+    }
+};

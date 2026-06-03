@@ -1,0 +1,26 @@
+class Solution {
+public:
+    int visit(vector<int>& StartTime, vector<int>& StartDuration, vector<int>& EndTime, vector<int>& EndDuration)
+    { 
+        int finish=INT_MAX;
+        int mini=INT_MAX;
+        for(int i=0;i<StartTime.size();i++)
+        {
+            int total=StartTime[i]+StartDuration[i];
+            if(total<finish)
+            {
+                finish=total;
+            }
+        }
+        for(int i=0;i<EndTime.size();i++)
+        {
+            mini=min(mini,max(finish,EndTime[i])+EndDuration[i]);
+           
+        }
+        return mini;
+
+    }
+    int earliestFinishTime(vector<int>& landStartTime, vector<int>& landDuration, vector<int>& waterStartTime, vector<int>& waterDuration) {
+           return min(visit(landStartTime,landDuration,waterStartTime,waterDuration),  visit(waterStartTime,waterDuration,landStartTime,landDuration));  
+    }
+};

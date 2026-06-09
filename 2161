@@ -1,0 +1,28 @@
+class Solution {
+public:
+    vector<int> pivotArray(vector<int>& nums, int pivot) {
+        vector<int>low;
+        vector<int>high;
+        vector<int>piv;
+        for(int i=0;i<nums.size();i++)
+        {
+            if(nums[i]<pivot)
+            {
+                low.push_back(nums[i]);
+            }
+            else if(nums[i]==pivot)
+            {
+                piv.push_back(nums[i]);
+            }
+            else
+            {
+                high.push_back(nums[i]);
+            }
+        }
+        vector<int>ans;
+        ans.insert(ans.begin(),high.begin(),high.end());
+        ans.insert(ans.begin(),piv.begin(),piv.end());
+        ans.insert(ans.begin(),low.begin(),low.end());
+        return ans;
+    }
+};

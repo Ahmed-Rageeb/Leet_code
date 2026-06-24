@@ -1,0 +1,43 @@
+class Solution {
+public:
+    /*int dp(int i,int coin,vector<int>& costs,int coins,vector<vector<int>> &visit)
+    {
+        if(i>=costs.size() ||coin>coins)
+        {
+            return 0;
+        }
+        if(visit[i][coin]!=-1)
+        {
+            return visit[i][coin];
+        }
+        int skip=dp(i+1,coin,costs,coins,visit);
+        int take=0;
+        if (coin + costs[i] <= coins)
+        {
+            take=1+dp(i+1,coin+costs[i],costs,coins,visit);
+        } 
+        visit[i][coin]=max(skip,take);
+        return visit[i][coin];
+    }
+    */
+    int maxIceCream(vector<int>& costs, int coins) {
+        /*vector<vector<int>>visit(costs.size(),vector<int>(coins+1,-1));
+        return dp(0,0,costs,coins,visit);*/
+        sort(costs.begin(),costs.end());
+        int count=0;
+        int sum=0;
+        for(int i=0;i<costs.size();i++)
+        {
+             if(sum+costs[i]<=coins)
+             {
+                sum+=costs[i];
+                count++;
+             }
+             else
+             {
+                break;
+             }
+        }
+        return count;
+    }
+};

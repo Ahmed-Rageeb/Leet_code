@@ -1,0 +1,52 @@
+class Solution {
+public:
+    bool findSafeWalk(vector<vector<int>>& grid, int health) {
+        vector<vector<int>>c={{0,1},{0,-1},{1,0},{-1,0}};
+        int m=grid.size();
+        int n=grid[0].size();
+        vector<vector<int>>dis(m,vector<int>(n,INT_MAX));
+        deque<pair<int,int>>q;
+        q.push_front({0,0});
+        dis[0][0]=grid[0][0];
+        while(!q.empty())
+        {
+            auto [x,y]=q.front();
+            q.pop_front();
+            if(x==m-1 && y==n-1)
+            {
+                return true;
+            }
+            for(auto d:c)
+            {
+                int dx=x+d[0];
+                int dy=y+d[1];
+                if(dx<0 || dx>=m || dy<0|| dy>=n)
+                {
+                    continue;
+                }
+                int cost=dis[x][y]+grid[dx][dy];
+                if(cost>=health)
+                {
+                    continue;
+                }
+                if(cost< dis[dx][dy])
+                {
+                    dis[dx][dy]=dis[x][y]+grid[dx][dy];
+                    if(grid[dx][dy]==0)
+                    {
+                        q.push_front({dx,dy});
+                    }
+                    else
+                    {
+                         q.push_back({dx, dy});
+                    }
+                    
+                }
+            }
+
+        }
+
+
+        return false;
+    }
+};

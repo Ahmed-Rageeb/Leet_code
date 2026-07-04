@@ -1,0 +1,31 @@
+class Solution {
+public:
+    int minScore(int n, vector<vector<int>>& roads) {
+        vector<vector<pair<int,int>>>mat(n+1);
+        for(auto r: roads)
+        {
+            mat[r[0]].push_back({r[1],r[2]});
+            mat[r[1]].push_back({r[0],r[2]});
+        }
+        vector<int>visit(n+1,0);
+        queue<int>q;
+        q.push(1);
+        visit[1]=1;
+        int ans=INT_MAX;
+        while(!q.empty())
+        {
+            int temp=q.front();
+            q.pop();
+            for(auto[n,w]:mat[temp])
+            {
+                ans=min(ans,w);
+                if(visit[n]==0)
+                {
+                    q.push(n);
+                    visit[n]=1;
+                }
+            }
+        }
+        return ans;
+    }
+};

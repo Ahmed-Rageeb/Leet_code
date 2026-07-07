@@ -1,0 +1,22 @@
+class Solution {
+public:
+    long long sumAndMultiply(int n) {
+        
+        long long x=0;
+        long long sum=0;
+        int pow=1;
+        while(n>0)
+        {
+            int temp=n%10;
+            sum+=temp;
+            if(temp!=0)
+            {
+                temp=temp*pow;
+                x+=temp;
+                pow*=10;
+            }
+            n=n/10;
+        }
+        return x*sum;
+    }
+};

@@ -1,0 +1,67 @@
+class Solution {
+public:
+/*
+    long long modpow(long long base,long long len)
+    {
+        long long ans=1;
+        int mod= 1e9 + 7;
+        for(int i=0;i<len;i++)
+        {
+            ans=(ans*base)% mod;
+        }
+        return ans;
+    }
+*/
+    long long modpow(long long base,long long exp)
+    {
+        long long ans = 1;
+        long long mod = 1e9 + 7;
+
+        while(exp)
+        {
+            if(exp & 1)
+                ans = ans * base % mod;
+
+            base = base * base % mod;
+            exp >>= 1;
+        }
+
+        return ans;
+    }
+
+
+    vector<int> sumAndMultiply(string s, vector<vector<int>>& queries) {
+        int mod= 1e9 + 7;
+        int n=s.length();
+        vector<pair<long long,long long>>x(n+1,{0,0});
+        vector<int>zero(n+1,0);
+        for(int i=0;i<s.length();i++)
+        {
+            int temp=s[i]-'0';
+            if(temp>0)
+            {
+                x[i+1]={(x[i].first*10+temp)%mod,(x[i].second+temp)%mod};
+                zero[i+1]=zero[i];
+            }
+            else
+            {
+                x[i+1]={x[i].first,x[i].second};
+                zero[i+1]=zero[i]+1;
+            }
+
+        }
+        vector<int>ans(queries.size(),0);
+        for(int i=0;i<queries.size();i++)
+        {
+            int l=queries[i][0];
+            int r=queries[i][1]+1;
+            int len=(r-l)-(zero[r]-zero[l]);
+            long long templen= modpow(10,len)%mod;
+           // long long tempsub=(x[l].first*templen)%mod;
+            long long num=((x[r].first-(x[l].first*templen))%mod+mod)%mod;
+            long long sum=((x[r].second-x[l].second)%mod+mod)%mod;
+            ans[i]=(num*sum)%mod;
+        }
+        return ans;
+    }
+};

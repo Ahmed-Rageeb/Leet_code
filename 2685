@@ -1,0 +1,66 @@
+class Solution {
+public:
+    int fix(vector<int>&v,int i)
+    {
+        if(v[i]==i)
+        {
+            return i;
+        }
+        return v[i]=fix(v,v[i]);
+    }
+    int countCompleteComponents(int n, vector<vector<int>>& edges) {
+        vector<int>v(n,-1);
+        /*
+        for(int i=0;i<edges.size();i++)
+        {
+            if(v[edges[i][0]]==-1)
+            {
+                v[edges[i][0]]=edges[i][0];
+            }
+            v[edges[i][1]]=v[edges[i][0]];
+        }*/
+        for(int i=0;i<n;i++)
+        {
+            if(v[i]==-1)
+            {
+                v[i]=i;
+            }
+        }
+
+         for (auto& e : edges) {
+            int ra = fix(v, e[0]);
+            int rb = fix(v, e[1]);
+            if (ra != rb) v[ra] = rb;  
+        }
+
+        vector<int>node(n,0);
+        for(int i=0;i<n;i++)
+        {
+            int temp=fix(v,v[i]);
+            node[temp]++;
+        }
+        vector<int>edg(n,0);
+
+        for(int i=0;i<edges.size();i++)
+        {
+            int temp=fix(v,edges[i][0]);
+            edg[temp]++;
+        }
+        int count=0;
+        for(int i=0;i<n;i++)
+        {
+            if(node[i]==0)
+            {
+                continue;
+            }
+            int ver=node[i];
+            int edge=(ver*(ver-1))/2;
+            if(edg[i]==edge)
+            {
+                count++;
+            }
+        }
+        return count;
+       
+    }
+};

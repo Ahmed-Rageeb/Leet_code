@@ -1,0 +1,52 @@
+class Solution {
+public:
+    vector<int> sequentialDigits(int low, int high) {
+        string a=to_string(low);
+        int i=a[0]-'0';
+        int len=a.length();
+        string b=to_string(high);
+        int hlen=b.length();
+        vector<int>ans;
+        while(true)
+        {
+            int temp=i;
+            int l=temp+1;
+            bool chng=false;
+            int j;
+            bool check1=true;
+            for( j=0;j<len-1;j++)
+            {
+               
+               if(l>9)
+               {
+                    check1= false;
+                    break;
+               }
+               temp=temp*10+l;
+               l++;
+            }
+            string check=to_string(temp);
+            if(temp>=low && temp<=high &&  check[0]-'0'!=9 && check1)
+            {
+                ans.push_back(temp);
+            }
+            i++;
+            //string check=to_string(temp);
+            if(check[check.length()-1]-'0'==9 || check[0]-'0'==9 )
+            {
+                chng=true;
+            }
+            if(chng)
+            {
+                i=1;
+                len++;
+            }
+            if(len>hlen || temp>high)
+            {
+                break;
+            }
+            cout<<i;
+        }
+        return ans;
+    }
+};

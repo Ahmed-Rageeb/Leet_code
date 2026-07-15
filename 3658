@@ -1,0 +1,25 @@
+class Solution {
+public:
+    int gcdOfOddEvenSums(int n) {
+        int odd=1,even=0;
+        for(int i=1;i<=n;i++)
+        {
+            if(i<n)
+            {
+                odd+=2*i+1;
+            }
+            
+            even+=2*i;
+        }
+        int m= min(odd,even);
+        int ni=max(odd,even);
+        //cout<<m<<ni;
+        while(m!=0)
+        {
+            int temp=ni%m;
+            ni=m;
+            m=temp;
+        }
+        return ni;
+    }
+};

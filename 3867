@@ -1,0 +1,38 @@
+class Solution {
+public:
+    int gcd(int a, int b)
+    {
+        int c=std::max(a,b);
+        int d=std::min(a,b);
+        while(d!=0)
+        {
+            int temp=c%d;
+            c=d;
+            d=temp;
+        }
+        return c;
+    }
+    long long gcdSum(vector<int>& nums) {
+        int mx=INT_MIN;
+        vector<int>pre;
+        for(int i=0;i<nums.size();i++)
+        {
+            if(nums[i]>mx)
+            {
+                mx=nums[i];
+            }
+            pre.push_back(gcd(mx,nums[i]));
+        }
+        sort(pre.begin(),pre.end());
+        int siz=pre.size();
+        
+        long long ans=0;
+        for(int j=0;j<siz/2;j++)
+        {
+            int a=pre[j];
+            int b=pre[siz-1-j];
+            ans+=gcd(a,b);
+        }
+        return ans;
+    }
+};

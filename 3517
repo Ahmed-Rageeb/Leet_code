@@ -1,0 +1,17 @@
+class Solution {
+public:
+    string smallestPalindrome(string s) {
+        int len=s.length();
+        len=len/2;
+        string temp=s.substr(0,len);
+        sort(temp.begin(),temp.end());
+        string temp1=temp;
+        reverse(temp1.begin(),temp1.end());
+        string middle="";
+        if(s.length()%2!=0)
+        {
+            middle=s[(s.length()/2)];
+        }
+        return temp+middle+temp1;
+    }
+};

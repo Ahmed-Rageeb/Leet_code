@@ -1,0 +1,25 @@
+class Solution {
+public:
+    int minimumPushes(string word) {
+        int i=1;
+        int cost=0;
+        int size=word.length();
+        int remain=0;
+        while(size!=0)
+        {
+            if(size>8)
+            {
+                remain=8;
+                size=size-8;
+            }
+            else
+            {
+                remain=size;
+                size=0;
+            }
+            cost+=remain*i;
+            i++;
+        }
+        return cost;
+    }
+};

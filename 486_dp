@@ -1,0 +1,41 @@
+class Solution {
+public:
+    int n;
+    int dp(vector<int>& nums, vector<vector<vector<int>>>&visit,int turn,int i,int j)
+    {
+        if (i>j)
+        {
+            return 0;
+        }
+        
+        if(visit[i][j][turn]!=-1)
+        {
+            return visit[i][j][turn];
+        }
+        if(turn==0)
+        {
+            int fornt=nums[i]+dp(nums,visit,1,i+1,j);
+            int end=nums[j]+dp(nums,visit,1,i,j-1);
+            visit[i][j][turn]=max(fornt,end);
+        }
+        if(turn==1)
+        {
+            int fornt=dp(nums,visit,0,i+1,j);
+            int end=dp(nums,visit,0,i,j-1);
+            visit[i][j][turn]=min(fornt,end);
+        }
+        return visit[i][j][turn];
+    }
+    bool stoneGame(vector<int>& piles) {
+       vector<vector<vector<int>>> visit(piles.size(),vector<vector<int>>(piles.size(),vector<int>(2,-1)));
+       n=piles.size()-1;
+       int first= dp(piles,visit,0,0,n);
+       int total=0;
+       for(int i=0;i<piles.size();i++)
+       {
+         total+=piles[i];
+       }
+       int sec=total-first;
+       return (first>=sec)? true:false;
+    }
+};

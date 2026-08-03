@@ -1,0 +1,71 @@
+class Solution {
+public:
+       int n;
+    int dp(vector<int>& nums, vector<vector<int>>& visit,int turn,int i)
+    {
+        if (i>n)
+        {
+            return 0;
+        }
+        
+        if(visit[i][turn]!=-1)
+        {
+            return visit[i][turn];
+        }
+        if(turn==0)
+        {
+            int one=INT_MIN,two=INT_MIN,three=INT_MIN;
+            one=nums[i]+dp(nums,visit,1,i+1);
+            if(i+1<=n)
+            {
+                two=nums[i]+nums[i+1]+dp(nums,visit,1,i+2);
+            }
+            if(i+1<=n && i+2<=n)
+            {
+                three=nums[i]+nums[i+1]+nums[i+2]+dp(nums,visit,1,i+3);
+
+            }
+            visit[i][turn]=max(one,max(two,three));
+        }
+        if(turn==1)
+        {
+            int one=INT_MAX,two=INT_MAX,three=INT_MAX;
+            one=dp(nums,visit,0,i+1);
+            if(i+1<=n)
+            {
+                two=dp(nums,visit,0,i+2);
+            }
+            if(i+1<=n && i+2<=n)
+            {
+                three=dp(nums,visit,0,i+3);
+            }
+            
+            visit[i][turn]=min(one,min(two,three));
+        }
+        return visit[i][turn];
+    }
+    string stoneGameIII(vector<int>& stoneValue) {
+       vector<vector<int>> visit(stoneValue.size(),vector<int>(2, -1));
+       n=stoneValue.size()-1;
+       int first= dp(stoneValue,visit,0,0);
+       int total=0;
+       for(int i=0;i<stoneValue.size();i++)
+       {
+         total+=stoneValue[i];
+       }
+       int sec=total-first;
+       if(first>sec)
+       {
+            return "Alice";
+       }
+       else if(first==sec)
+       {
+            return "Tie";
+       }
+       else
+       {
+            return "Bob";
+       }
+    
+    }
+};

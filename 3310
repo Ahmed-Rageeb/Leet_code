@@ -1,0 +1,63 @@
+class Solution {
+public:
+    void needtoremove(vector<vector<int>>&g,vector<int>&visit, int k)
+    {
+        queue<int>q;
+        visit[k]=1;
+        q.push(k);
+        while(!q.empty())
+        {
+            int k=q.front();
+            q.pop();
+            for(int i=0;i<g[k].size();i++)
+            {
+                if(visit[g[k][i]]==0)
+                {
+                    q.push(g[k][i]);
+                    visit[g[k][i]]=1;
+                }
+            }
+        }
+    }
+    vector<int> remainingMethods(int n, int k, vector<vector<int>>& invocations) {
+        vector<int>visit(n,0);
+        vector<vector<int>>g(n);
+        for(int i=0;i<invocations.size();i++)
+        {
+            
+            int pre=invocations[i][0];
+            int post=invocations[i][1];
+            g[pre].push_back(post);
+        }
+        needtoremove(g,visit,k);
+        vector<int>ans;
+        int check=0;
+        for(int i=0;i<g.size();i++)
+        {
+            if(visit[i]==0)
+            {
+                for(int j=0;j<g[i].size();j++)
+                {
+                    if(visit[g[i][j]]==1)
+                    {
+                        check=1;
+                    }
+                    
+                }
+            }
+        }
+        for(int i=0;i<n;i++)
+        {
+            if(check==1)
+            {
+                ans.push_back(i);
+            }
+            else if(check ==0 && visit[i]==0)
+            {
+                ans.push_back(i);
+            }
+            
+        }
+        return ans;
+    }
+};

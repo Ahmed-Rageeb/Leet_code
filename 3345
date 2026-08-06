@@ -1,0 +1,25 @@
+class Solution {
+public:
+    int smallestNumber(int n, int t) {
+        int ans;
+        while (true)
+        {
+            int temp=n;
+            int product=1;
+            while(temp!=0)
+            {
+                int remin=temp%10;
+                temp=temp/10;
+                product*=remin;
+            }
+            //cout<<product;
+            if(product%t==0)
+            {
+                ans=n;
+                break;
+            }
+            n++;
+        }
+        return ans;
+    }
+};

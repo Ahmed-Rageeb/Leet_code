@@ -1,0 +1,87 @@
+class Solution {
+public:
+
+    int dp(vector<int>& piles,
+           vector<vector<vector<int>>>& visit,
+           int i,
+           int turn,
+           int m)
+    {
+        if (i >= piles.size())
+        {
+            return 0;
+        }
+
+        if (visit[i][m][turn] != -1)
+        {
+            return visit[i][m][turn];
+        }
+
+        // Alice's turn
+        if (turn == 0)
+        {
+            int sum = 0;
+            int maxi = INT_MIN;
+
+            for (int x = 1;
+                 x <= 2 * m && i + x <= piles.size();
+                 x++)
+            {
+                sum += piles[i + x - 1];
+
+                int newM = max(m, x);
+
+                int result =
+                    sum +
+                    dp(piles,
+                       visit,
+                       i + x,
+                       1,
+                       newM);
+
+                maxi = max(maxi, result);
+            }
+
+            visit[i][m][turn] = maxi;
+        }
+
+        // Bob's turn
+        else
+        {
+            int mini = INT_MAX;
+
+            for (int x = 1;
+                 x <= 2 * m && i + x <= piles.size();
+                 x++)
+            {
+                int newM = max(m, x);
+
+                int result =
+                    dp(piles,
+                       visit,
+                       i + x,
+                       0,
+                       newM);
+
+                mini = min(mini, result);
+            }
+
+            visit[i][m][turn] = mini;
+        }
+
+        return visit[i][m][turn];
+    }
+
+    int stoneGameII(vector<int>& piles)
+    {
+        vector<vector<vector<int>>> visit(
+            piles.size(),
+            vector<vector<int>>(
+                piles.size() + 1,
+                vector<int>(2, -1)
+            )
+        );
+
+        return dp(piles, visit, 0, 0, 1);
+    }
+};

@@ -1,0 +1,19 @@
+class Solution {
+public:
+    int maximumLengthSubstring(string s) {
+        int l=0;
+        int count=0;
+        map<char,int>m;
+        for(int i=0;i<s.length();i++)
+        {
+            m[s[i]]++;
+            while(m[s[i]]>2)
+            {
+                m[s[l]]--;
+                l++;
+            }
+            count=max(count,i-l+1);
+        }
+        return count;
+    }
+};

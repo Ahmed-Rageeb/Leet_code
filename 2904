@@ -1,0 +1,40 @@
+class Solution {
+public:
+    string shortestBeautifulSubstring(string s, int k) {
+        string temp="";
+        int count=0;
+        int l=0;
+        int len=INT_MAX;
+        for(int i=0;i<s.length();i++)
+        {
+            if(s[i]=='1')
+            {
+                count++;
+            }
+            while(count==k)
+            {
+                int t=i-l+1;
+                if(t<len)
+                {
+                    temp=s.substr(l,i-l+1);
+                    
+                    len=t;
+                }
+                else if(t==len)
+                {
+                    string h=s.substr(l,i-l+1);
+                    if(temp.length()==0 || h<temp)
+                    {
+                        temp=h;
+                    }
+                }
+                if(s[l]=='1')
+                {
+                    count--;
+                }
+                l++;
+            }
+        }
+        return temp;
+    }
+};

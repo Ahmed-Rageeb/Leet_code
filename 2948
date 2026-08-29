@@ -1,0 +1,47 @@
+class Solution {
+public:
+    vector<int> lexicographicallySmallestArray(vector<int>& nums, int limit) {
+        vector<int>temp=nums;
+        sort(temp.begin(),temp.end());
+        map<int,vector<int>>m;
+        int j=0;
+        m[j].push_back(temp[0]);
+        
+        int big=temp[temp.size()-1];
+        map<int, int>v;
+        v[temp[0]]=j;
+        for(int i=0;i<temp.size();i++)
+        {
+            if(i+1<temp.size())
+            {
+                if(temp[i+1]-temp[i]<=limit)
+                {
+                    m[j].push_back(temp[i+1]);
+                    v[temp[i+1]]=j;
+                }
+                else
+                {
+                    j++;
+                    m[j].push_back(temp[i+1]);
+                    v[temp[i+1]]=j;
+                }
+            }
+        }
+        vector<int>ans;
+        for(int i=0;i<nums.size();i++)
+        {
+            int grp=v[nums[i]];
+            int small=-1;
+            if (!m[grp].empty()) 
+            {
+                small=m[grp].front();
+                m[grp].erase(m[grp].begin());
+            }
+            if(small!=-1)
+            {
+                ans.push_back(small);
+            }
+        }
+        return ans;
+    }
+};

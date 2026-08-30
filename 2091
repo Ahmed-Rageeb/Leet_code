@@ -1,0 +1,31 @@
+class Solution {
+public:
+    int minimumDeletions(vector<int>& nums) {
+        if(nums.size()==1)
+        {
+            return 1;
+        }
+        int min=INT_MAX;
+        int max=INT_MIN;
+        int mini=0;
+        int maxi=0;
+        for(int i=0;i<nums.size();i++)
+        {
+            if(nums[i]>max)
+            {
+                max=nums[i];
+                maxi=i;
+            }
+            if(nums[i]<min)
+            {
+                min=nums[i];
+                mini=i;
+            }
+        }
+
+        int fornt=std::max(maxi,mini)+1;
+        int back=nums.size()-std::min(maxi,mini);
+        int both=std::min(maxi,mini)+1+nums.size()-std::max(maxi,mini);
+        return std::min(fornt,std::min(back,both));
+    }
+};

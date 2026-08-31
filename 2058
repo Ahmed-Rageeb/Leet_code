@@ -1,0 +1,77 @@
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+class Solution {
+public:
+    vector<int> nodesBetweenCriticalPoints(ListNode* head) {
+        if(head==NULL)
+        {
+            return {-1,-1};
+        }
+        int count=0;
+        int mn=INT_MAX,mx=0;
+        int dis=0;
+        int track=0;
+        int first=head->val;
+        count++;
+        if(head->next==NULL)
+        {
+            return {-1,-1};
+        }
+        head=head->next;
+        int second=head->val;
+        count++;
+        if(head->next==NULL)
+        {
+            return {-1,-1};
+        }
+        head=head->next;
+        int third=head->val;
+        count++;
+        int prev=0;
+        int firstCritical = 0;
+        while(head!=NULL)
+        {           
+            if(first>second && third>second || first<second && third<second)
+            {
+                if(firstCritical==0)
+                {
+                    prev=count;
+                    firstCritical = count;
+                }
+                else
+                {
+                    int dis=count-prev;
+                    mx=count-firstCritical;
+                    if(dis<mn)
+                    {
+                        mn=dis;
+                    }
+                    prev=count;
+
+                }               
+            }
+            first=second;
+            second=third;
+            if( head->next == NULL)
+            {
+                break;
+            }
+            head=head->next;            
+            third=head->val;
+            count++;
+        }
+        if(firstCritical == 0 || firstCritical == prev)
+        {
+            return {-1,-1};
+        }
+        return {mn,mx};
+    }
+};

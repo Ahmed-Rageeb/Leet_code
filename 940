@@ -1,0 +1,28 @@
+class Solution {
+public:
+    int dp(vector<long long>&visit,vector<int>&last,string s,int i)
+    {
+        if(i==s.length())
+        {
+             return (visit[i] - 1 + 1000000007) % 1000000007;
+        }
+        int ch=s[i]-'a';
+        
+        visit[i+1]=(visit[i]*2) % 1000000007;
+        if(last[ch]!=-1)
+        {
+            visit[i+1]=visit[i+1]-visit[last[ch]];
+        }
+        
+        last[ch]=i;
+        visit[i+1]%=1000000007;
+        return dp(visit,last,s,i+1);
+
+    }
+    int distinctSubseqII(string s) {
+        vector<long long> visit(s.length() + 1, -1);
+        vector<int>last(26,-1);
+        visit[0]=1;
+        return dp(visit,last,s,0);
+    }
+};

@@ -1,0 +1,33 @@
+class Solution {
+public:
+    int largestOverlap(vector<vector<int>>& img1, vector<vector<int>>& img2) {
+        vector<pair<int,int>>p1,p2;
+        for(int i=0;i<img1.size();i++)
+        {
+            for(int j=0;j<img1[0].size();j++)
+            {
+                if(img1[i][j]==1)
+                {
+                    p1.push_back({i,j});
+                }
+                if(img2[i][j]==1)
+                {
+                    p2.push_back({i,j});
+                }
+            }
+        }
+        map<pair<int,int>,int>m;
+        int res=0;
+        for(auto point1:p1)
+        {
+            for(auto point2:p2)
+            {
+                int diffr=point2.first-point1.first;
+                int diffc=point2.second-point1.second;
+                m[{diffr,diffc}]++;
+                res=max(res,m[{diffr,diffc}]);
+            }
+        }
+        return res;
+    }
+};

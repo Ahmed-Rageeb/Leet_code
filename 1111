@@ -1,0 +1,48 @@
+class Solution {
+public:
+    vector<int> maxDepthAfterSplit(string seq) {
+        stack<int>st;
+        vector<int>v(seq.length(),0);
+        for(int i=0;i<seq.length();i++)
+        {
+            if(seq[i]=='(')
+            {
+                if(!st.empty())
+                {
+                    int temp=st.top();
+                    if(temp==0)
+                    {
+                        st.push(1);
+                        v[i]=1;
+                    }
+                    else
+                    {
+                        st.push(0);
+                        v[i]=0;
+                    }
+                }
+                else
+                {
+                    st.push(0);
+                    v[i]=0;
+                }
+            }
+            else
+            {
+                int temp=st.top();
+                if(temp==0)
+                {
+                    st.pop();
+                    v[i]=0;
+                }
+                else
+                {
+                    st.pop();
+                    v[i]=1;
+                }
+            }
+        }
+
+        return v;
+    }
+};

@@ -1,0 +1,29 @@
+class Solution {
+public:
+    vector<string>visit(int n,vector<string>a,int target)
+    {
+        if(n==target)
+        {
+            return a;
+        }
+        set<string>st;
+        for(string s:a)
+        {
+            for(int i=0;i<=s.length();i++)
+            {
+                string t=s.substr(0,i)+"()"+s.substr(i);
+                st.insert(t);
+            }
+        }
+        vector<string> temp(st.begin(), st.end());
+
+        return visit(n + 1, temp, target);
+    }
+    vector<string> generateParenthesis(int n) {
+        string a="()";
+        vector<string>v;
+        v.push_back(a);
+        vector<string>ans=visit(1,v,n);
+        return ans;
+    }
+};

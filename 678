@@ -1,0 +1,55 @@
+class Solution {
+public:
+    bool visit(string &s, vector<vector<int>>&dp,int i,int count)
+    {
+        if(i==s.length())
+        {
+            if(count==0)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        if(dp[i][count]!=-1)
+        {
+            return dp[i][count];
+        }
+        bool valid=false;
+        if(s[i]=='*')
+        {
+            if(count!=0)
+            {
+                valid=visit(s,dp,i+1,count+1) || visit(s,dp,i+1,count-1)|| visit(s,dp,i+1,count);
+            }
+            else
+            {
+                valid=visit(s,dp,i+1,count+1)|| visit(s,dp,i+1,count);
+            }
+            
+        }
+        else if(s[i]=='(')
+        {
+            valid=visit(s,dp,i+1,count+1);
+        }
+        else
+        {
+            if(count>0)
+            {
+                valid=visit(s,dp,i+1,count-1);
+            }
+            else
+            {
+                valid=false;
+            }
+            
+        }
+        return dp[i][count]=valid;
+    }
+    bool checkValidString(string s) {
+        vector<vector<int>>dp(s.length(),vector<int>(s.length()+1,-1));
+        return visit(s,dp,0,0);
+    }
+};

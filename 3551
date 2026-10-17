@@ -1,0 +1,50 @@
+class Solution {
+public:
+    int minSwaps(vector<int>& nums) {
+        vector<int>sum(nums.size());
+        for(int i=0;i<nums.size();i++)
+        {
+            int s=0;
+            int temp=nums[i];
+            while(temp>0)
+            {
+                s+=temp%10;
+                temp=temp/10;
+            }
+            sum[i]=s;
+        }
+        vector<int>index(nums.size());
+        for(int i=0;i<nums.size();i++)
+        {
+            index[i]=i;
+        }
+        sort(index.begin(),index.end(),[&] (int a,int b)
+            {
+                if(sum[a]!=sum[b])
+                {
+                    return sum[a]<sum[b];
+                }
+                return nums[a]<nums[b];
+            }
+             
+        );
+        int swap=0;
+        vector<int>visit(nums.size(),-1);
+        for(int i=0;i<nums.size();i++)
+        {
+            int component=0;
+            if(visit[i]==-1)
+            {
+                int j=i;
+                while(visit[j]==-1)
+                {
+                    visit[j]=1;
+                    component++;
+                    j=index[j];
+                }
+                swap+=component-1;
+            }
+        } 
+        return swap;
+    }
+};

@@ -1,0 +1,66 @@
+class Solution {
+public:
+    int minOperations(vector<int>& nums) {
+        int n = nums.size();
+        int pos = 0;
+
+        for (int i = 0; i < n; i++) {
+            if (nums[i] == 0) {
+                pos = i;
+                break;
+            }
+        }
+
+        bool forward = true;
+        bool backward = true;
+
+        for (int i = 0; i < n; i++) {
+            if (nums[(pos + i) % n] != i) {
+                forward = false;
+            }
+
+            if (nums[(pos - i + n) % n] != i) {
+                backward = false;
+            }
+        }
+
+        if (!forward && !backward) {
+            return -1;
+        }
+
+        int targetType = forward ? 0 : 1;
+        int targetShift = pos;
+
+        vector<vector<int>> dist(2, vector<int>(n, -1));
+        queue<pair<int, int>> q;
+
+        q.push({0, 0});
+        dist[0][0] = 0;
+
+        while (!q.empty()) {
+            auto [type, shift] = q.front();
+            q.pop();
+
+            if (type == targetType && shift == targetShift) {
+                return dist[type][shift];
+            }
+
+            int nextShift = (shift + 1) % n;
+
+            if (dist[type][nextShift] == -1) {
+                dist[type][nextShift] = dist[type][shift] + 1;
+                q.push({type, nextShift});
+            }
+
+            int nextType = 1 - type;
+            nextShift = (n - 1 - shift + n) % n;
+
+            if (dist[nextType][nextShift] == -1) {
+                dist[nextType][nextShift] = dist[type][shift] + 1;
+                q.push({nextType, nextShift});
+            }
+        }
+
+        return -1;
+    }
+};

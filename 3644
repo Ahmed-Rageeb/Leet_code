@@ -1,0 +1,15 @@
+class Solution {
+public:
+    int sortPermutation(vector<int>& nums) {
+        int max=-1;
+        for(int i=0;i<nums.size();i++)
+        {
+            if(i!=nums[i])
+            {
+                max&=i&nums[i];
+                
+            }
+        }
+        return max==-1?0:max;
+    }
+};

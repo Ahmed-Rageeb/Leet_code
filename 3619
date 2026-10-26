@@ -1,0 +1,49 @@
+class Solution {
+public:
+    long long bfs(int r,int c,int i,int j, vector<vector<int>>& grid,vector<vector<int>>& visit)
+    {
+        queue<pair<int,int>>q;
+        q.push({i,j});
+        visit[i][j]=1;
+        long long sum=0;
+        sum+=grid[i][j];
+        vector<int>dx={0,1,0,-1};
+        vector<int>dy={1,0,-1,0};
+        while(!q.empty())
+        {
+            auto a=q.front();
+            q.pop();
+            for(int i=0;i<4;i++)
+            {
+                int x=a.first+dx[i];
+                int y=a.second+dy[i];
+                if(x>=0 && x<r && y>=0 && y<c && visit[x][y]==-1 && grid[x][y]!=0)
+                {
+                    q.push({x,y});
+                    visit[x][y]=1;
+                    sum+=grid[x][y];
+                }
+            }
+        }
+        return sum;
+    }
+    int countIslands(vector<vector<int>>& grid, int k) {
+        vector<vector<int>>visit(grid.size(),vector<int>(grid[0].size(),-1));
+        int count=0;
+        for(int i=0;i<grid.size();i++)
+        {
+            for(int j=0;j<grid[i].size();j++)
+            {
+                if(grid[i][j]!=0 && visit[i][j]==-1)
+                {
+                    long long temp=bfs(grid.size(),grid[0].size(),i,j,grid,visit);
+                    if(temp%k==0)
+                    {
+                        count++;
+                    }
+                }
+            }
+        }
+        return count;
+    }
+};

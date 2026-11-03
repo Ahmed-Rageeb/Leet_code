@@ -1,0 +1,41 @@
+class Solution {
+public:
+    int visit(vector<vector<int>>& grid,vector<vector<vector<int>>>&dp,int i,int j,int dir)
+    {
+        if(i<0 || i>=grid.size() || j<0 || j>=grid[0].size())
+        {
+            return 0;
+        }
+        if(i==(grid.size()-1) && j==(grid[0].size()-1))
+        {
+            return 1;
+        }
+        if(dp[i][j][dir]!=-1)
+        {
+            return dp[i][j][dir];
+        }
+        long long ans=0;
+        if(grid[i][j]==1)
+        {
+            if(dir==0)
+            {
+                ans=visit(grid,dp,i+1,j,1);
+            }
+            else
+            {
+                ans=visit(grid,dp,i,j+1,0);
+            }
+        }
+        else
+        {
+            ans=visit(grid,dp,i+1,j,1)+visit(grid,dp,i,j+1,0);
+        }
+    
+        dp[i][j][dir]=ans %  1000000007;
+        return dp[i][j][dir];
+    }
+    int uniquePaths(vector<vector<int>>& grid) {
+        vector<vector<vector<int>>>dp(grid.size(),vector<vector<int>>(grid[0].size(),vector<int>(2,-1)));
+        return (visit(grid,dp,0,1,0)+visit(grid,dp,1,0,1)) %  1000000007;
+    }
+};

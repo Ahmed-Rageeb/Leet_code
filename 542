@@ -1,0 +1,47 @@
+class Solution {
+public:
+    vector<vector<int>> updateMatrix(vector<vector<int>>& mat) {
+        queue<pair<int,int>>q;
+        vector<vector<int>>dis(mat.size(),vector<int>(mat[0].size(),-1));
+        vector<vector<int>>vis(mat.size(),vector<int>(mat[0].size(),-1));
+        for(int i=0;i<mat.size();i++)
+        {
+            for(int j=0;j<mat[i].size();j++)
+            {
+                if(mat[i][j]==0)
+                {
+                    dis[i][j]=0;
+                    q.push({i,j});
+                    vis[i][j]=1;
+                }
+                else
+                {
+                    dis[i][j]=INT_MAX;
+                }
+            }
+        }
+        vector<vector<int>>dp={{0,1},{0,-1},{1,0},{-1,0}};
+        while(!q.empty())
+        {
+            auto it=q.front();
+            int r=it.first;
+            int c=it.second;
+            q.pop();
+            for(auto i: dp)
+            {
+                int x=r+i[0];
+                int y=c+i[1];
+                if(!(x<0 || x>=mat.size() || y<0 ||y>=mat[0].size()))
+                {
+                    if(mat[x][y]==1 && vis[x][y]==-1)
+                    {
+                        dis[x][y]=dis[r][c]+1;
+                        vis[x][y]=1;
+                        q.push({x,y});
+                    }
+                }
+            }
+        }
+        return dis;
+    }
+};

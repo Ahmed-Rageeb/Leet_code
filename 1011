@@ -1,0 +1,49 @@
+class Solution {
+public:
+    int solve(vector<int>& weights, int cap)
+    {
+        int sum=0;
+        int day=1;
+        for(int i:weights)
+        {
+            if(sum+i>cap)
+            {
+                day++;
+                sum=i;
+            }
+            else
+            {
+                sum+=i;
+            }
+        }
+        return day;
+    }
+    int shipWithinDays(vector<int>& weights, int days) {
+        int sum=0;
+        int min=INT_MIN;
+        for(int i:weights)
+        {
+            sum+=i;
+            if(i>min)
+            {
+                min=i;
+            }
+        }
+        
+        int ans=0;
+        while(min<=sum)
+        {
+            int mid=min+(sum-min)/2;
+            if(solve(weights,mid)>days)
+            {
+                min=mid+1;
+            }
+            else
+            {
+                ans=mid;
+                sum=mid-1;
+            }
+        }
+        return ans;
+    }
+};

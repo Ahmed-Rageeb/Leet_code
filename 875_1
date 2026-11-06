@@ -1,0 +1,50 @@
+class Solution {
+public:
+    long long solve(int num, vector<int>& piles)
+    {
+        long long count=0;
+        int prev=0;
+        for(int i: piles)
+        {
+            if(i<=num)
+            {
+                count++;
+            }
+            else
+            {
+                int temp=(i+num -1) / num;
+                count+=temp;
+
+            }
+        }
+        return count;
+    }
+    int minEatingSpeed(vector<int>& piles, int h) {
+        int min=1;
+        int max=INT_MIN;
+        for(int i:piles)
+        {
+            if(i>max)
+            {
+                max=i;
+            }
+            
+        }
+        
+        int ans=INT_MAX;
+        while(min<=max)
+        {
+            int mid=min+(max-min)/2;
+            if(solve(mid,piles)>h)
+            {
+                min=mid+1;
+            }
+            else
+            {
+                max=mid-1;
+                ans=mid;
+            }
+        }
+        return ans;
+    }
+};

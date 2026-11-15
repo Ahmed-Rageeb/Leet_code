@@ -1,0 +1,49 @@
+class Solution {
+public:
+    int numOfSubarrays(vector<int>& arr) {
+        /*
+            arr=1,2,3,4,5,6,7,8
+            sum=1,3,6,10,15,21,28,36
+            sum=odd,odd,even,even,odd,odd,even,even
+              up to  5 (index)
+              sum(1,5)= 21-1=even
+              sum(2,5)=21-3=even
+              sum(3,5)=21-6=odd
+              sum(4,5)=21-10=odd
+              sum(5,5)21-15=even
+              21 is odd
+              as 21 is odd. count even.+1 (21 itself) 
+              because odd-even =odd
+              similar 28 is even
+              odd-odd=even
+              28-21=7
+              28-15=13
+              28-10=18
+              28-6=22
+              28-3=25
+              28-1=27
+              count odd.
+
+        */
+        int sum=0;
+        int odd=0; 
+        int even=0;
+        int ans=0;
+        int mod=1e9 + 7;
+        for(int i=0;i<arr.size();i++)
+        {
+            sum+=arr[i];
+            if(sum%2==0)
+            {
+                ans=(ans+odd)%mod;
+                even++;
+            }
+            else
+            {
+                ans=(ans+even+1)%mod;
+                odd++;
+            }
+        }
+        return ans;
+    }
+};

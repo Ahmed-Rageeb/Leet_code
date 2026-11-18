@@ -1,0 +1,30 @@
+class Solution {
+public:
+    int minChanges(string s) {
+        int num=0;
+        int prev=s[0];
+        int len=0;
+        for(int i=0;i<s.length();i++)
+        {
+            if(s[i]==prev)
+            {
+                len++;
+                prev=s[i];
+            }
+            else
+            {
+                if(len%2==0)
+                {
+                    len=1;
+                    prev=s[i];
+                }
+                else
+                {
+                    num++;
+                    len++;
+                }
+            }
+        }
+        return num;
+    }
+};

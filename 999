@@ -1,0 +1,84 @@
+class Solution {
+public:
+    int bfs(vector<vector<char>>& board,int ii,int jj)
+    {
+        int ans=0;
+        bool boolx=true,boolxx=true,booly=true,boolyy=true;
+        
+        for(int i=1;i<=8;i++)
+        {
+            int x=ii+i;
+            if(x>=0 && x<board.size() && board[x][jj]=='B')
+            {
+                boolx=false;
+            }
+            if(x>=0 && x<board.size() && board[x][jj]!='B' && boolx)
+            {
+                if(board[x][jj]=='p')
+                {
+                    ans++;
+                    boolx=false;
+                }
+                
+            }
+            x=ii-i;
+            if(x>=0 && x<board.size() && board[x][jj]=='B')
+            {
+                boolxx=false;
+            }
+            if(x>=0 && x<board.size() && board[x][jj]!='B' && boolxx)
+            {
+                if(board[x][jj]=='p')
+                {
+                    ans++;
+                    boolxx=false;
+                }
+                
+            }
+            int y=jj+i;
+            if(y>=0 && y<board[0].size() && board[ii][y]=='B')
+            {
+                booly=false;
+            }
+            if(y>=0 && y<board[0].size() && board[ii][y]!='B' && booly )
+            {
+                if(board[ii][y]=='p')
+                {
+                    ans++;
+                    booly=false;
+                }
+                
+            }
+            y=jj-i;
+            if(y>=0 && y<board[0].size() && board[ii][y]=='B')
+            {
+                boolyy=false;
+            }
+            if(y>=0 && y<board[0].size() && board[ii][y]!='B' && boolyy )
+            {
+                if(board[ii][y]=='p')
+                {
+                    ans++;
+                    boolyy=false;
+                }
+               
+            }
+        }   
+            
+        
+        return ans;
+    }
+    int numRookCaptures(vector<vector<char>>& board) {
+        for (int i=0;i<board.size();i++)
+        {
+            for(int j=0;j<board[i].size();j++)
+            {
+                if(board[i][j]=='R')
+                {
+                    return bfs(board, i, j);
+                }
+            }
+        }
+        return 0;
+    }
+};

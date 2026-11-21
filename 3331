@@ -1,0 +1,56 @@
+class Solution {
+public:
+    vector<int>ans;
+    void calculate(int node, vector<vector<int>>& adj)
+    {
+        ans[node] = 1;
+
+        for(auto child : adj[node])
+        {
+            calculate(child, adj);
+            ans[node] += ans[child];
+        }
+    }
+
+    void dfs(vector<int>& parent,vector<vector<int>>&visit, map<char,int>&m,string &s,int i)
+    {
+        int old=-1;
+        if(m.find(s[i])!=m.end())
+        {
+            old=m[s[i]];
+            parent[i]=old;
+        }
+        m[s[i]]=i;
+        for (auto c:visit[i])
+        {
+            dfs(parent,visit,m,s,c);
+        }
+        if(old==-1)
+        {
+            m.erase(s[i]);
+        }
+        else
+        {
+            m[s[i]]=old;
+        }
+    }
+    vector<int> findSubtreeSizes(vector<int>& parent, string s) {
+        map<char,int>m;
+        parent[0]=0;
+        ans.assign(parent.size(),0);
+        vector<vector<int>>visit(parent.size());
+        for(int i=1;i<parent.size();i++)
+        {
+            visit[parent[i]].push_back(i);
+        }
+        dfs(parent,visit,m,s,0);
+        vector<vector<int>> adj(parent.size());
+        for(int i = 1; i <parent.size(); i++)
+        {
+            adj[parent[i]].push_back(i);
+        }
+        calculate(0, adj);
+        return ans;
+
+    }
+};

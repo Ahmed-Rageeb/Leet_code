@@ -1,0 +1,32 @@
+class Solution {
+public:
+    int findMaxLength(vector<int>& nums) {
+        int count=0;
+        int ans=0;
+        map<int,int>m;
+        m[0]=-1;
+
+        for(int i=0;i<nums.size();i++)
+        {
+          if(nums[i]==1)
+          {
+            count++;
+          } 
+          else if(nums[i]==0)
+          {
+            count--;
+          } 
+          if(m.find(count)!=m.end())
+          {
+            auto it=m.find(count);
+            ans=max(ans,i- it->second);
+          }
+          else
+          {
+            m[count]=i;
+          }
+
+        }
+        return ans;
+    }
+};

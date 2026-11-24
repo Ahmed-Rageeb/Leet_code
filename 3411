@@ -1,0 +1,21 @@
+class Solution {
+public:
+    int maxLength(vector<int>& nums) {
+        int ans=2;
+        int start=0;
+        int pro=1;
+        for(int i=0;i<nums.size();i++)
+        {
+
+            while(gcd(pro,nums[i])>1)
+            {
+                pro=pro/nums[start];
+                start++;
+            }
+            pro*=nums[i];
+            int len=i-start+1;
+            ans=max(ans,len);
+        }
+        return ans;
+    }
+};
